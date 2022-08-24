@@ -208,17 +208,17 @@ a.readmore {
 	overflow: hidden;
 	clear: both
 }
-/* Í¼Æ¬ÏòÉÏ·­×ªµÄ¶¯»­Ð§¹û */
+/* Í¼Æ¬ï¿½ï¿½ï¿½Ï·ï¿½×ªï¿½Ä¶ï¿½ï¿½ï¿½Ð§ï¿½ï¿½ */
 .info figure {
 	display: inline-block;
 	width: 630px;
 	height: 250px;
 	position: relative;
-	-webkit-animation: pageTop 6s ease 0.5s backwards;
+	/* -webkit-animation: pageTop 6s ease 0.5s backwards;
 	-moz-animation: pageTop 6s ease 0.5s backwards;
 	-ms-animation: pageTop 6s ease 0.5s backwards;
 	-o-animation: pageTop 6s ease 0.5s backwards;
-	animation: pageTop 6s ease 0.5s backwards;
+	animation: pageTop 6s ease 0.5s backwards; */
 	float: left;
 }
 .info figcaption {
@@ -237,7 +237,7 @@ transition: opacity .75s ease-out;
 .info figure:hover figcaption {
 	opacity: 1;
 }
-/* ÓÃopacity ÉèÖÃÊó±ê·ÅÉÏÈ¥ÏÔÊ¾ÎÄ×ÖµÄÐ§¹û */
+/* ï¿½ï¿½opacity ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¥ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Öµï¿½Ð§ï¿½ï¿½ */
 .info figcaption strong {
 	display: block;
 	line-height: 40px
@@ -257,7 +257,7 @@ transition: opacity .75s ease-out;
 .card p:first-child {
 	padding: 40px 0 0 40px
 }
-/* ½á¹¹ÐÔÎ±ÀàÑ¡Ôñ·û Ñ¡ÔñµÚÒ»¸öp±êÇ©£¬²¢ÇÒÉèÖÃÉÏ¡¢×ó¾àÀëÊÇ40px*/
+/* ï¿½á¹¹ï¿½ï¿½Î±ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ Ñ¡ï¿½ï¿½ï¿½Ò»ï¿½ï¿½pï¿½ï¿½Ç©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½40px*/
 .card p {
 	padding: 0 0 0 40px;
 	line-height: 28px;
@@ -487,6 +487,6 @@ opacity:0;
 	left: 0;
 	width: 100%;
 	height: 100%;
-	pointer-events: none;
+	/* pointer-events: none; */
 	z-index: 100001;
 }
