@@ -1,137 +1,229 @@
-(function($){
-  // Search
-  var $searchWrap = $('#search-form-wrap'),
-    isSearchAnim = false,
-    searchAnimDuration = 200;
+﻿(function($){
+	// Settings
+	var repeat = localStorage.repeat || 0,
+		shuffle = localStorage.shuffle || 'false',
+		continous = true,
+		autoplay = true,
+		playlist = [
+		{
 
-  var startSearchAnim = function(){
-    isSearchAnim = true;
-  };
+album: '德国第一装甲师进行曲.mp3',
+cover:'images/5.jpg',
+mp3: 'mp3/deguo.mp3',
+ogg: ''
+},
+{
+album: '魔兽世界 - 亡灵序曲.mp3',
+cover: 'images/6.jpg',
+mp3: 'mp3/The Dawn.mp3',
+ogg: ''
+},
+{
+album: 'chenparty 超好听的德国童声 dj.mp3',
+cover: 'images/7.jpg',
+mp3: 'mp3/chenparty dj.mp3',
+ogg: ''
+},];
 
-  var stopSearchAnim = function(callback){
-    setTimeout(function(){
-      isSearchAnim = false;
-      callback && callback();
-    }, searchAnimDuration);
-  };
+	
+	
+	var time = new Date(),
+		currentTrack = shuffle === 'true' ? time.getTime() % playlist.length : 0,
+		trigger = false,
+		audio, timeout, isPlaying, playCounts;
 
-  $('#nav-search-btn').on('click', function(){
-    if (isSearchAnim) return;
+	var play = function(){
+		audio.play();
+		$('.playback').addClass('playing');
+		timeout = setInterval(updateProgress, 500);
+		isPlaying = true;
+	}
 
-    startSearchAnim();
-    $searchWrap.addClass('on');
-    stopSearchAnim(function(){
-      $('.search-form-input').focus();
-    });
-  });
+	var pause = function(){
+		audio.pause();
+		$('.playback').removeClass('playing');
+		clearInterval(updateProgress);
+		isPlaying = false;
+	}
 
-  $('.search-form-input').on('blur', function(){
-    startSearchAnim();
-    $searchWrap.removeClass('on');
-    stopSearchAnim();
-  });
+	// Update progress
+	var setProgress = function(value){
+		var currentSec = parseInt(value%60) < 10 ? '0' + parseInt(value%60) : parseInt(value%60),
+			ratio = value / audio.duration * 100;
 
-  // Share
-  $('body').on('click', function(){
-    $('.article-share-box.on').removeClass('on');
-  }).on('click', '.article-share-link', function(e){
-    e.stopPropagation();
+		$('.timer').html(parseInt(value/60)+':'+currentSec);
+		$('.progress .pace').css('width', ratio + '%');
+		$('.progress .slider a').css('left', ratio + '%');
+	}
 
-    var $this = $(this),
-      url = $this.attr('data-url'),
-      encodedUrl = encodeURIComponent(url),
-      id = 'article-share-box-' + $this.attr('data-id'),
-      offset = $this.offset();
+	var updateProgress = function(){
+		setProgress(audio.currentTime);
+	}
 
-    if ($('#' + id).length){
-      var box = $('#' + id);
+	// Progress slider
+	$('.progress .slider').slider({step: 0.1, slide: function(event, ui){
+		$(this).addClass('enable');
+		setProgress(audio.duration * ui.value / 100);
+		clearInterval(timeout);
+	}, stop: function(event, ui){
+		audio.currentTime = audio.duration * ui.value / 100;
+		$(this).removeClass('enable');
+		timeout = setInterval(updateProgress, 500);
+	}});
 
-      if (box.hasClass('on')){
-        box.removeClass('on');
-        return;
-      }
-    } else {
-      var html = [
-        '<div id="' + id + '" class="article-share-box">',
-          '<input class="article-share-input" value="' + url + '">',
-          '<div class="article-share-links">',
-            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
-            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
-          '</div>',
-        '</div>'
-      ].join('');
+	// Volume slider
+	var setVolume = function(value){
+		audio.volume = localStorage.volume = value;
+		$('.volume .pace').css('width', value * 100 + '%');
+		$('.volume .slider a').css('left', value * 100 + '%');
+	}
 
-      var box = $(html);
+	var volume = localStorage.volume || 0.5;
+	$('.volume .slider').slider({max: 1, min: 0, step: 0.01, value: volume, slide: function(event, ui){
+		setVolume(ui.value);
+		$(this).addClass('enable');
+		$('.mute').removeClass('enable');
+	}, stop: function(){
+		$(this).removeClass('enable');
+	}}).children('.pace').css('width', volume * 100 + '%');
 
-      $('body').append(box);
-    }
+	$('.mute').click(function(){
+		if ($(this).hasClass('enable')){
+			setVolume($(this).data('volume'));
+			$(this).removeClass('enable');
+		} else {
+			$(this).data('volume', audio.volume).addClass('enable');
+			setVolume(0);
+		}
+	});
 
-    $('.article-share-box.on').hide();
+	// Switch track
+	var switchTrack = function(i){
+		if (i < 0){
+			track = currentTrack = playlist.length - 1;
+		} else if (i >= playlist.length){
+			track = currentTrack = 0;
+		} else {
+			track = i;
+		}
 
-    box.css({
-      top: offset.top + 25,
-      left: offset.left
-    }).addClass('on');
-  }).on('click', '.article-share-box', function(e){
-    e.stopPropagation();
-  }).on('click', '.article-share-box-input', function(){
-    $(this).select();
-  }).on('click', '.article-share-box-link', function(e){
-    e.preventDefault();
-    e.stopPropagation();
+		$('audio').remove();
+		loadMusic(track);
+		if (isPlaying == true) play();
+	}
 
-    window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-  });
+	// Shuffle
+	var shufflePlay = function(){
+		var time = new Date(),
+			lastTrack = currentTrack;
+		currentTrack = time.getTime() % playlist.length;
+		if (lastTrack == currentTrack) ++currentTrack;
+		switchTrack(currentTrack);
+	}
 
-  // Caption
-  $('.article-entry').each(function(i){
-    $(this).find('img').each(function(){
-      if ($(this).parent().hasClass('fancybox')) return;
+	// Fire when track ended
+	var ended = function(){
+		pause();
+		audio.currentTime = 0;
+		playCounts++;
+		if (continous == true) isPlaying = true;
+		if (repeat == 1){
+			play();
+		} else {
+			if (shuffle === 'true'){
+				shufflePlay();
+			} else {
+				if (repeat == 2){
+					switchTrack(++currentTrack);
+				} else {
+					if (currentTrack < playlist.length) switchTrack(++currentTrack);
+				}
+			}
+		}
+	}
 
-      var alt = this.alt;
+	var beforeLoad = function(){
+		var endVal = this.seekable && this.seekable.length ? this.seekable.end(0) : 0;
+		$('.progress .loaded').css('width', (100 / (this.duration || 1) * endVal) +'%');
+	}
 
-      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+	// Fire when track loaded completely
+	var afterLoad = function(){
+		if (autoplay == true) play();
+	}
 
-      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
-    });
+	// Load track
+	var loadMusic = function(i){
+		var item = playlist[i],
+			newaudio = $('<audio>').html('<source src="'+item.mp3+'"><source src="'+item.ogg+'">').appendTo('#player');
+		
+		$('.cover').html('<img src="'+item.cover+'" alt="'+item.album+'">');
+		$('.tag').html('<span class="album">'+item.album+'</span>');
+		$('#playlist li').removeClass('playing').eq(i).addClass('playing');
+		audio = newaudio[0];
+		audio.volume = $('.mute').hasClass('enable') ? 0 : volume;
+		audio.addEventListener('progress', beforeLoad, false);
+		audio.addEventListener('durationchange', beforeLoad, false);
+		audio.addEventListener('canplay', afterLoad, false);
+		audio.addEventListener('ended', ended, false);
+	}
 
-    $(this).find('.fancybox').each(function(){
-      $(this).attr('rel', 'article' + i);
-    });
-  });
+	loadMusic(currentTrack);
+	$('.playback').on('click', function(){
+		if ($(this).hasClass('playing')){
+			pause();
+		} else {
+			play();
+		}
+	});
+	$('.rewind').on('click', function(){
+		if (shuffle === 'true'){
+			shufflePlay();
+		} else {
+			switchTrack(--currentTrack);
+		}
+	});
+	$('.fastforward').on('click', function(){
+		if (shuffle === 'true'){
+			shufflePlay();
+		} else {
+			switchTrack(++currentTrack);
+		}
+	});
+	$('#playlist li').each(function(i){
+		var _i = i;
+		$(this).on('click', function(){
+			switchTrack(_i);
+		});
+	});
 
-  if ($.fancybox){
-    $('.fancybox').fancybox();
-  }
+	if (shuffle === 'true') $('.shuffle').addClass('enable');
+	if (repeat == 1){
+		$('.repeat').addClass('once');
+	} else if (repeat == 2){
+		$('.repeat').addClass('all');
+	}
 
-  // Mobile nav
-  var $container = $('#container'),
-    isMobileNavAnim = false,
-    mobileNavAnimDuration = 200;
+	$('.repeat').on('click', function(){
+		if ($(this).hasClass('once')){
+			repeat = localStorage.repeat = 2;
+			$(this).removeClass('once').addClass('all');
+		} else if ($(this).hasClass('all')){
+			repeat = localStorage.repeat = 0;
+			$(this).removeClass('all');
+		} else {
+			repeat = localStorage.repeat = 1;
+			$(this).addClass('once');
+		}
+	});
 
-  var startMobileNavAnim = function(){
-    isMobileNavAnim = true;
-  };
-
-  var stopMobileNavAnim = function(){
-    setTimeout(function(){
-      isMobileNavAnim = false;
-    }, mobileNavAnimDuration);
-  }
-
-  $('#main-nav-toggle').on('click', function(){
-    if (isMobileNavAnim) return;
-
-    startMobileNavAnim();
-    $container.toggleClass('mobile-nav-on');
-    stopMobileNavAnim();
-  });
-
-  $('#wrap').on('click', function(){
-    if (isMobileNavAnim || !$container.hasClass('mobile-nav-on')) return;
-
-    $container.removeClass('mobile-nav-on');
-  });
+	$('.shuffle').on('click', function(){
+		if ($(this).hasClass('enable')){
+			shuffle = localStorage.shuffle = 'false';
+			$(this).removeClass('enable');
+		} else {
+			shuffle = localStorage.shuffle = 'true';
+			$(this).addClass('enable');
+		}
+	});
 })(jQuery);
