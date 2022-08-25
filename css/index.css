@@ -1,16 +1,16 @@
 @charset "gbk";
 /* blog */
 .blog {
-	margin: 30px 20px;
+	margin: 30px 30px 0; 
 	overflow: hidden
 }
 .blog figure {
 	background: #ececec;
 	border: #FFF 10px solid;
 	width: 270px;
-	height: 430px;
+	height: 400px;
 	float: left;
-	margin: 0 25px 0;
+	margin: 0 20px 0;
 	overflow: hidden
 }
 .blog figure img {
@@ -27,12 +27,12 @@
 	font-weight: bold
 }
 .blog figure p a {
-	color: #226039;
+	color: #0e6830;
 }
 .blog figure figcaption {
 	padding: 10px;
 	line-height: 22px;
-	color: #666;
+	color: rgb(41, 39, 39);
 }
 .blog figure ul {
 	background: url(../images/yu.png) no-repeat center;
@@ -55,7 +55,7 @@
 	left: 0px;
 	top: 0px;
 	background: rgba(0, 0, 0, 0.5) url(../images/yu.png) no-repeat center 10px;
-	color: #FFF;
+	color: #000;
 	display: block;
 	width: 100%;
 	height: 100%;
@@ -104,10 +104,10 @@
 }
 .cbp_tmtimeline > li .cbp_tmtime span:last-child {
 	font-size: 22px;
-	color: #3594cb;
+	color: #3558cb;
 }
 .cbp_tmtimeline > li:nth-child(odd) .cbp_tmtime span:last-child {
-color: #6cbfee;
+color: #3558cb;
 }
 .cbp_tmtimeline > li .cbp_tmlabel {
 	margin: 0 30px 15px 180px;
@@ -133,15 +133,14 @@ background: #666;
 	content: " ";
 	height: 0;
 	width: 0;
-	position:
-absolute;
+	position:absolute;
 	pointer-events: none;
 	border-right-color: #666;
 	border-width: 10px;
 	top: 10px;
 }
 .cbp_tmtimeline > li:nth-child(odd) .cbp_tmlabel:after {
-border-right-color: #666;
+border-right-color: rgb(102, 102, 102);
 }
 .cbp_tmtimeline > li .cbp_tmicon {
 	width: 10px;
@@ -156,10 +155,10 @@ border-right-color: #666;
 	line-height: 40px;
 	-webkit-font-smoothing: antialiased;
 	position: absolute;
-	color: #fff;
-	background: #46a4da;
+	color: #000;
+	background: #3558cb;
 	border-radius: 50%;
-	box-shadow: 0 0 0 3px #afdcf8;
+	box-shadow: 0 0 0 3px #fff;
 	text-align: center;
 	left: 170px;
 	top: 15px;
@@ -195,7 +194,7 @@ a.readmore {
 	box-shadow: 0 0 0 3px #ececec;
 }
 .cbp_tmtimeline li:hover .cbp_tmtime {
-	background: #afdcf8;
+	background: #3558cb;
 	border-radius: 20px 0 0 20px;
 }
 .cbp_tmtimeline li:hover .cbp_tmtime span {
@@ -203,23 +202,23 @@ a.readmore {
 }
 /* ---------------------info------------------------- */
 .info {
-	width: 1000px;
+	width: 960px;
 	margin: 40px auto;
 	overflow: hidden;
 	clear: both
 }
 /* ͼƬ���Ϸ�ת�Ķ���Ч�� */
-.info figure {
+.info img {
 	display: inline-block;
-	width: 630px;
+	/* width: 400px;
 	height: 250px;
-	position: relative;
+	position: relative; */
 	/* -webkit-animation: pageTop 6s ease 0.5s backwards;
 	-moz-animation: pageTop 6s ease 0.5s backwards;
 	-ms-animation: pageTop 6s ease 0.5s backwards;
 	-o-animation: pageTop 6s ease 0.5s backwards;
 	animation: pageTop 6s ease 0.5s backwards; */
-	float: left;
+	float: centert;
 }
 .info figcaption {
 	padding: 20px;
@@ -227,7 +226,7 @@ a.readmore {
 	top: 20%;
 	left: 0;
 	background: rgba(153, 153, 153, .8);
-	color: white;
+	color: 000;
 	opacity: 0;
 -webkit-transition: opacity .75s ease-out;
 -moz-transition: opacity .75s ease-out;
@@ -248,11 +247,13 @@ transition: opacity .75s ease-out;
 	border-radius: 6px;
 	width: 350px;
 	float: right;
-	height: 250px;
-	overflow: hidden
+	height: 300px;
+	overflow: hidden;
 }
 .card h1 {
-	padding: 10px
+	padding: 10px;
+	margin-top: 10px;
+	color: #000;
 }
 .card p:first-child {
 	padding: 40px 0 0 40px
@@ -260,9 +261,9 @@ transition: opacity .75s ease-out;
 /* �ṹ��α��ѡ��� ѡ���һ��p��ǩ�����������ϡ��������40px*/
 .card p {
 	padding: 0 0 0 40px;
-	line-height: 28px;
+	line-height: 40px;
 	text-shadow: 0px 1px 2px rgba(0, 0, 0, .5);
-	color:black;
+	color:#000;
 	-webkit-animation: animations2 5s ease-in-out 5s;
 	-moz-animation: animations2 5s ease-in-out 5s;
 	-o-animation: animations2 5s ease-in-out 5s;
@@ -277,7 +278,7 @@ transition: opacity .75s ease-out;
 	width: 50px;
 	display: block;
 	overflow: hidden;
-	box-shadow: 0px 1px 0px rgba(255, 255, 255, .1), inset 0px 1px 1px rgba(0, 0, 0, .7);
+	box-shadow: 0px 1px 0px #CCC(250, 223, 223, 0.514), inset 0px 1px 1px rgba(0, 0, 0, .7);
 	border-radius: 50%;
 	float: left;
 	margin: 0 6px;
@@ -489,4 +490,19 @@ opacity:0;
 	height: 100%;
 	pointer-events: none;
 	z-index: 100001;
+}
+.img13{
+	width: 550px;
+}
+.title_blog{
+  font-size: 32px;
+	color: #000;
+}
+.topnav span{
+	color: #000;
+	font-size: 22px;
+	margin-left: 20px;
+}
+#time{
+	color: #000;
 }

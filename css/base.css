@@ -1,12 +1,12 @@
 @charset "gbk";
-/* ¹²ÓÃcss */
+/* ï¿½ï¿½ï¿½ï¿½css */
 * {
 	margin: 0;
 	padding: 0
 }
 body {
-	font: 14px "Î¢ÈíÑÅºÚ", Arial, Helvetica, sans-serif;
-	background: url(../images/acc.jpg) no-repeat center top #000;
+	font: 14px "Î¢ï¿½ï¿½ï¿½Åºï¿½", Arial, Helvetica, sans-serif;
+	background:  no-repeat center top #cbc7ff;
 	color: #fff
 }
 img {
@@ -16,7 +16,7 @@ img {
 ul, li {
 	list-style: none;
 }
-/*Ä¬ÈÏÁ´½ÓÑÕÉ« */
+/*Ä¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É« */
 a:link, a:visited, a:active {
 	text-decoration: none;
 	color: #fff
@@ -127,7 +127,7 @@ footer {
 	width: 26px;
 	text-align: center;
 	display: inline-block
-}/* Õë¶ÔIE6 */
+}/* ï¿½ï¿½ï¿½IE6 */
 .page>b, .page a:hover {
 	background: #2a455d;
 	color: #FFF;
@@ -178,7 +178,7 @@ _top:expression(documentElement.scrollTop+documentElement.clientHeight - this.cl
 	background:url(../images/sprite_v2.png) no-repeat;
 	margin-top:10px;
 	text-decoration:none;
-	font:16px/50px "¿¬Ìå";
+	font:16px/50px "ï¿½ï¿½ï¿½ï¿½";
 	text-align:center;
 	color:#FFF;
 	border-radius:2px;
@@ -202,4 +202,16 @@ _top:expression(documentElement.scrollTop+documentElement.clientHeight - this.cl
 }
 .guide .report {
 	background-position:-146px -236px;
+}
+.title_blog{
+  font-size: 32px;
+	color: #000;
+}
+.topnav span{
+	color: #000;
+	font-size: 22px;
+	margin-left: 20px;
+}
+#time{
+	color: #000;
 }

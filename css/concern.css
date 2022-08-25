@@ -152,3 +152,15 @@ a.readmore {
 .cbp_tmtimeline li:hover .cbp_tmtime span {
 	color: #fff;
 }
+.title_blog{
+  font-size: 32px;
+	color: #000;
+}
+.topnav span{
+	color: #000;
+	font-size: 22px;
+	margin-left: 20px;
+}
+#time{
+	color: #000;
+}

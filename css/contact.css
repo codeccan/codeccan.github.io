@@ -4,7 +4,7 @@
 	margin: 30px 20px;
 	overflow: hidden
 }
-/*±êÇ©ÔÆ*/
+/*ï¿½ï¿½Ç©ï¿½ï¿½*/
 .cloud {
 	width: 350px;
 	clear: both;
@@ -111,4 +111,16 @@ background: #83AF9B
 #tagscloud a:hover {
 	color:#fff;
 	background:#0099ff;
+}
+.title_blog{
+  font-size: 32px;
+	color: #000;
+}
+.topnav span{
+	color: #000;
+	font-size: 22px;
+	margin-left: 20px;
+}
+#time{
+	color: #000;
 }
